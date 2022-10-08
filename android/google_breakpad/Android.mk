@@ -90,7 +90,65 @@ LOCAL_SRC_FILES := \
     src/common/linux/guid_creator.cc \
     src/common/linux/linux_libc_support.cc \
     src/common/linux/memory_mapped_file.cc \
-    src/common/linux/safe_readlink.cc
+    src/common/linux/safe_readlink.cc \
+	src/processor/basic_code_modules.cc \
+	src/processor/basic_source_line_resolver.cc \
+	src/processor/call_stack.cc \
+	src/processor/cfi_frame_info.cc \
+	src/processor/convert_old_arm64_context.cc \
+	src/processor/disassembler_x86.cc \
+	src/processor/dump_context.cc \
+	src/processor/dump_object.cc \
+	src/processor/exploitability.cc \
+	src/processor/exploitability_linux.cc \
+	src/processor/exploitability_win.cc \
+	src/processor/fast_source_line_resolver.cc \
+	src/processor/logging.cc \
+	src/processor/microdump.cc \
+	src/processor/microdump_processor.cc \
+	src/processor/minidump.cc \
+	src/processor/minidump_processor.cc \
+	src/processor/module_comparer.cc \
+	src/processor/module_serializer.cc \
+	src/processor/pathname_stripper.cc \
+	src/processor/process_state.cc \
+	src/processor/proc_maps_linux.cc \
+	src/processor/simple_symbol_supplier.cc \
+	src/processor/source_line_resolver_base.cc \
+	src/processor/stack_frame_cpu.cc \
+	src/processor/stack_frame_symbolizer.cc \
+	src/processor/stackwalk_common.cc \
+	src/processor/stackwalker.cc \
+	src/processor/stackwalker_amd64.cc \
+	src/processor/stackwalker_arm.cc \
+	src/processor/stackwalker_arm64.cc \
+	src/processor/stackwalker_address_list.cc \
+	src/processor/stackwalker_mips.cc \
+	src/processor/stackwalker_ppc.cc \
+	src/processor/stackwalker_ppc64.cc \
+	src/processor/stackwalker_riscv.cc \
+	src/processor/stackwalker_riscv64.cc \
+	src/processor/stackwalker_sparc.cc \
+	src/processor/stackwalker_x86.cc \
+	src/processor/symbolic_constants_win.cc \
+	src/processor/tokenize.cc \
+	src/third_party/libdisasm/ia32_implicit.c \
+	src/third_party/libdisasm/ia32_insn.c \
+	src/third_party/libdisasm/ia32_invariant.c \
+	src/third_party/libdisasm/ia32_modrm.c \
+	src/third_party/libdisasm/ia32_opcode_tables.c \
+	src/third_party/libdisasm/ia32_operand.c \
+	src/third_party/libdisasm/ia32_reg.c \
+	src/third_party/libdisasm/ia32_settings.c \
+	src/third_party/libdisasm/libdis.h \
+	src/third_party/libdisasm/x86_disasm.c \
+	src/third_party/libdisasm/x86_format.c \
+	src/third_party/libdisasm/x86_imm.c \
+	src/third_party/libdisasm/x86_insn.c \
+	src/third_party/libdisasm/x86_misc.c \
+	src/third_party/libdisasm/x86_operand_list.c
+
+
 
 LOCAL_C_INCLUDES        := $(LOCAL_PATH)/src/common/android/include \
                            $(LOCAL_PATH)/src \
