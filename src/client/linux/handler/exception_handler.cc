@@ -382,29 +382,32 @@ void ExceptionHandler::SignalHandler(int sig, siginfo_t* info, void* uc) {
   // be delivered to the appropriate handler.
   if (handled) {
     InstallDefaultHandler(sig);
+    for (int i = 0; i < kNumHandledSignals; ++i) {
+      if (sig == kExceptionSignals[i]) {
+        // check whether sa_flags has set SA_SIGINFO , so we can know handler is
+        // set by *sa_handler or by *sa_sigaction
+        if ((old_handlers[i].sa_flags & SA_SIGINFO) == 0) {
+          // if sa_handler == SIG_DFL || SIG_IGN, don't do something
+          if (old_handlers[i].sa_handler != SIG_DFL &&
+              old_handlers[i].sa_handler != SIG_IGN &&
+              old_handlers[i].sa_handler != nullptr) {
+            old_handlers[i].sa_handler(sig);
+          }
+        } else {
+          if (old_handlers[i].sa_sigaction != nullptr) {
+            old_handlers[i].sa_sigaction(sig, info, uc);
+          }
+
+        }
+        break;
+      }
+    }
   } else {
     RestoreHandlersLocked();
   }
-
   pthread_mutex_unlock(&g_handler_stack_mutex_);
 
-  for (int i = 0; i < kNumHandledSignals; ++i) {
-    if (sig == kExceptionSignals[i]) {
-      // check whether sa_flags has set SA_SIGINFO , so we can know handler is
-      // set by *sa_handler or by *sa_sigaction
-      if ((old_handlers[i].sa_flags & SA_SIGINFO) == 0) {
-        // if sa_handler == SIG_DFL || SIG_IGN, don't do something
-        if (old_handlers[i].sa_handler != SIG_DFL &&
-            old_handlers[i].sa_handler != SIG_IGN &&
-            old_handlers[i].sa_handler != nullptr) {
-          old_handlers[i].sa_handler(sig);
-        }
-      } else {
-          old_handlers[i].sa_sigaction(sig, info, uc);
-      }
-      break;
-    }
-  }
+
 
   // info->si_code <= 0 iff SI_FROMUSER (SI_FROMKERNEL otherwise).
   if (info->si_code <= 0 || sig == SIGABRT) {
