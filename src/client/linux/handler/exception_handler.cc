@@ -397,7 +397,6 @@ void ExceptionHandler::SignalHandler(int sig, siginfo_t* info, void* uc) {
           if (old_handlers[i].sa_sigaction != nullptr) {
             old_handlers[i].sa_sigaction(sig, info, uc);
           }
-
         }
         break;
       }
