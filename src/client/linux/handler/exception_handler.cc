@@ -404,9 +404,8 @@ void ExceptionHandler::SignalHandler(int sig, siginfo_t* info, void* uc) {
   } else {
     RestoreHandlersLocked();
   }
+
   pthread_mutex_unlock(&g_handler_stack_mutex_);
-
-
 
   // info->si_code <= 0 iff SI_FROMUSER (SI_FROMKERNEL otherwise).
   if (info->si_code <= 0 || sig == SIGABRT) {
